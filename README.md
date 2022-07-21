@@ -1,1 +1,1 @@
-# khalti-web-test
+# Testing nepali payment gateways
