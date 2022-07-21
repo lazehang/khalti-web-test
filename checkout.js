@@ -14,13 +14,32 @@ const defaultConfig = {
   ],
 };
 
-export default function (el, options = {}, config = {}) {
+export function setUpKhaltiCheckout(el, options = {}, config = {}) {
   const checkout = new KhaltiCheckout({
     ...defaultConfig,
     ...config,
   });
 
-  el.onclick = function () {
+  el.onclick = () => {
     checkout.show(options);
   };
 }
+
+export const esewaCheckout = async (params) => {
+  const path = "https://uat.esewa.com.np/epay/main";
+
+  let form = document.createElement("form");
+  form.setAttribute("method", "POST");
+  form.setAttribute("action", path);
+
+  for (var key in params) {
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", key);
+    hiddenField.setAttribute("value", params[key]);
+    form.appendChild(hiddenField);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+};

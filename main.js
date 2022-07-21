@@ -1,6 +1,6 @@
 import "./style.css";
 import javascriptLogo from "./javascript.svg";
-import setUpKhaltiCheckout from "./checkout";
+import { setUpKhaltiCheckout, esewaCheckout } from "./checkout";
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -10,14 +10,17 @@ document.querySelector("#app").innerHTML = `
     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
     </a>
-    <h1>Khalti checkout web demo</h1>
-    <button id="payment-button">Pay with khalti</button>
+    <h1>Nepali Payment Web Demo</h1>
+    <button id="khalti-payment-button">Pay with khalti</button>
+    <button id="esewa-payment-button">Pay with esewa</button>
   </div>
 `;
 
-let btn = document.getElementById("payment-button");
+const khaltiBtn = document.getElementById("khalti-payment-button");
+const esewaBtn = document.getElementById("esewa-payment-button");
+
 setUpKhaltiCheckout(
-  btn,
+  khaltiBtn,
   { amount: 10000 },
   {
     eventHandler: {
@@ -33,3 +36,16 @@ setUpKhaltiCheckout(
     },
   }
 );
+
+esewaBtn.onclick = () =>
+  esewaCheckout({
+    amt: 100,
+    psc: 0,
+    pdc: 0,
+    txAmt: 0,
+    tAmt: 100,
+    pid: "ee2c3ca1-696b-4cc5-a6be-2c40d929d453",
+    scd: "EPAYTEST",
+    su: "http://merchant.com.np/page/esewa_payment_success",
+    fu: "http://merchant.com.np/page/esewa_payment_failed",
+  });
